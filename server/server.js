@@ -15,7 +15,10 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors({
-  origin: true,
+  origin: [
+    "http://localhost:5173",
+    "https://gym-website-pi-eight.vercel.app"
+  ],
   credentials: true
 }));
 app.use(express.json());
