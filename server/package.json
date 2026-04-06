@@ -15,7 +15,6 @@
     "razorpay": "^2.9.6"
   },
   "name": "server",
-  "module": "index.ts",
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js"
