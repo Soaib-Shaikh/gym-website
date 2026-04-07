@@ -3,7 +3,8 @@ import axiosApi from "../../api/axiosApi";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-    
+     console.log(import.meta.env.VITE_API_URL);
+     
 
     const navigate = useNavigate();
 
