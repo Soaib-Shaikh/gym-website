@@ -17,7 +17,7 @@ const PORT = process.env.PORT || 3000;
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://gym-website-pi-eight.vercel.app"
+    "https://gym-website-7hqmzu4by-soaib-shaikhs-projects.vercel.app/"
   ],
   credentials: true
 }));
