@@ -28,6 +28,14 @@ const BookTrainer = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      toast.error("Login required to book trainer 🔐");
+      window.location.href = "/login";
+      return;
+    }
+
     try {
       await axiosApi.post("/booking", form);
       toast.success("Booking Sent ✅");

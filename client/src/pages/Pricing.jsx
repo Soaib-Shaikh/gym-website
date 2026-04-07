@@ -68,6 +68,16 @@ const Pricing = () => {
   };
 
   const handlePayment = async (plan) => {
+
+    const token = localStorage.getItem("token");
+
+    // ❌ Not logged in
+    if (!token) {
+      toast.error("Please login first 🔐");
+      window.location.href = "/login";
+      return;
+    }
+
     try {
       const finalAmount = getPrice(plan.price);
 
@@ -209,10 +219,10 @@ const Pricing = () => {
                 disabled={isActive}
                 onClick={() => handlePayment(plan)}
                 className={`w-full py-3 text-sm font-semibold rounded-xl ${isActive
-                    ? "bg-gray-600 cursor-not-allowed"
-                    : plan.highlight
-                      ? "bg-red-500 hover:bg-red-600"
-                      : "border border-white/20 hover:bg-white hover:text-black"
+                  ? "bg-gray-600 cursor-not-allowed"
+                  : plan.highlight
+                    ? "bg-red-500 hover:bg-red-600"
+                    : "border border-white/20 hover:bg-white hover:text-black"
                   } transition`}
               >
                 {isActive ? "Current Plan" : "Choose Plan 🚀"}

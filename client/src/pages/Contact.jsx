@@ -19,6 +19,14 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      toast.error("Login required 🔐");
+      window.location.href = "/login";
+      return;
+    }
+
     try {
       setLoading(true);
 
