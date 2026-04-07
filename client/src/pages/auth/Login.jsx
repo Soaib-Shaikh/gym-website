@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import loginImg from "../../assets/images/login.png"
 
 const Login = () => {
-     console.log(import.meta.env.VITE_API_URL);
+    console.log(import.meta.env.VITE_API_URL);
 
 
     const navigate = useNavigate();
@@ -36,71 +36,73 @@ const Login = () => {
             toast.success("Login Success 🔥");
 
             // 🔁 redirect (home ya dashboard)
-      
-                    if (res.data.user.role === "admin") {
-                        navigate("/admin");
-                    } else {
-                        navigate("/");
-                    }
-                } catch (err) {
-                    console.log(err.response?.data || err.message);
-                    toast.error("Invalid Credentials ❌");
-                }
-            };
 
-        return (
-            <div className="h-screen flex">
+            if (res.data.user.role === "admin") {
+                navigate("/admin");
+            } else {
+                navigate("/");
+            }
+        } catch (err) {
+            console.log(err.response?.data || err.message);
+            toast.error("Invalid Credentials ❌");
+        }
+    };
 
-                {/* LEFT IMAGE */}
-                <div
-                    className="hidden md:block w-1/2 bg-cover bg-center"
-                    style={loginImg}
-                ></div>
+    return (
+        <div className="h-screen flex">
 
-                {/* RIGHT FORM */}
-                <div className="w-full md:w-1/2 flex items-center justify-center bg-[#111] text-white px-8">
+            {/* LEFT IMAGE */}
+            <div
+                className="hidden md:block w-1/2 bg-cover bg-center"
+                style={{
+                    backgroundImage: `url(${loginImg})`
+                }}
+            ></div>
 
-                    <div className="w-full max-w-md">
-                        <h2 className="text-3xl font-bold mb-6">Welcome Back 💪</h2>
+            {/* RIGHT FORM */}
+            <div className="w-full md:w-1/2 flex items-center justify-center bg-[#111] text-white px-8">
 
-                        <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+                <div className="w-full max-w-md">
+                    <h2 className="text-3xl font-bold mb-6">Welcome Back 💪</h2>
 
-                            <input
-                                type="email"
-                                placeholder="Email"
-                                className="p-3 bg-transparent border border-gray-600 outline-none"
-                                name="email"
-                                value={user.email || ''}
-                                onChange={handleChange}
-                            />
+                    <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
 
-                            <input
-                                type="password"
-                                placeholder="Password"
-                                className="p-3 bg-transparent border border-gray-600 outline-none"
-                                name="password"
-                                value={user.password || ''}
-                                onChange={handleChange}
-                            />
+                        <input
+                            type="email"
+                            placeholder="Email"
+                            className="p-3 bg-transparent border border-gray-600 outline-none"
+                            name="email"
+                            value={user.email || ''}
+                            onChange={handleChange}
+                        />
 
-                            <button className="bg-red-500 py-3 font-semibold hover:bg-red-600">
-                                Login
-                            </button>
+                        <input
+                            type="password"
+                            placeholder="Password"
+                            className="p-3 bg-transparent border border-gray-600 outline-none"
+                            name="password"
+                            value={user.password || ''}
+                            onChange={handleChange}
+                        />
 
-                        </form>
+                        <button className="bg-red-500 py-3 font-semibold hover:bg-red-600">
+                            Login
+                        </button>
 
-                        <p className="mt-4 text-sm text-gray-400">
-                            Don't have an account?{" "}
-                            <a href="/register" className="text-red-500">
-                                Sign Up
-                            </a>
-                        </p>
-                    </div>
+                    </form>
 
+                    <p className="mt-4 text-sm text-gray-400">
+                        Don't have an account?{" "}
+                        <a href="/register" className="text-red-500">
+                            Sign Up
+                        </a>
+                    </p>
                 </div>
 
             </div>
-        );
-    };
 
-    export default Login;
+        </div>
+    );
+};
+
+export default Login;
