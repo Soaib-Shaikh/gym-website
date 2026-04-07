@@ -4,6 +4,7 @@ const axiosApi = axios.create({
     baseURL: import.meta.env.VITE_API_URL || "http://localhost:5000/api", 
 })
 
+
 axiosApi.interceptors.request.use((req)=>{
     const token = localStorage.getItem('token');
     if(token){
