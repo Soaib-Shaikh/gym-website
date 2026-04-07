@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axiosApi from "../../api/axiosApi";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import loginImg from "../../assets/images/login.png"
 
 const Login = () => {
      console.log(import.meta.env.VITE_API_URL);
@@ -53,10 +54,7 @@ const Login = () => {
                 {/* LEFT IMAGE */}
                 <div
                     className="hidden md:block w-1/2 bg-cover bg-center"
-                    style={{
-                        backgroundImage:
-                            "url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=1470&auto=format&fit=crop')",
-                    }}
+                    style={loginImg}
                 ></div>
 
                 {/* RIGHT FORM */}
