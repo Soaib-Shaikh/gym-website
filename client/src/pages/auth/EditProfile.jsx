@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axiosApi from "../../api/axiosApi";
 import { FaArrowLeft } from "react-icons/fa";
+import toast from "react-hot-toast";
 
 const EditProfile = () => {
 
@@ -82,12 +83,12 @@ const EditProfile = () => {
         }
       });
 
-      alert("Profile Updated ✅");
+      toast.success("Profile Updated ✅");
       navigate("/profile");
 
     } catch (err) {
       console.log(err);
-      alert("Update Failed ❌");
+      toast.error("Update Failed ❌");
     }
   };
 

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axiosApi from "../../../api/axiosApi";
+import toast from "react-hot-toast";
 
 const AddTrainer = () => {
 
@@ -30,14 +31,14 @@ const AddTrainer = () => {
         image: imageUrl
       });
 
-      alert("Trainer Added ✅");
+      toast.success("Trainer Added ✅");
 
       setForm({ name: "", specialization: "", image: "" });
       setFile(null);
 
     } catch (err) {
       console.log(err);
-      alert("Error ❌");
+      toast.error("Error ❌");
     }
   };
 

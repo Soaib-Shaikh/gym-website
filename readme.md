@@ -4,7 +4,7 @@ A comprehensive gym management website built with a modern client-server archite
 
 ## Deploy Link
 
-Link:- https://gym-website-pi-eight.vercel.app/
+Link:- https://gym-website-brown-three.vercel.app/
 
 ## Table of Contents
 

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axiosApi from "../api/axiosApi";
+import toast from "react-hot-toast";
 
 const Contact = () => {
 
@@ -24,7 +25,7 @@ const Contact = () => {
       const res = await axiosApi.post("/contact/send", form);
 
       if (res.status === 201 || res.status === 200) {
-        alert("Message Sent ✅");
+        toast.success("Message Sent ✅");
 
         setForm({
           name: "",
@@ -35,7 +36,7 @@ const Contact = () => {
 
     } catch (err) {
       console.log(err);
-      alert("Error sending message ❌");
+      toast.error("Error sending message ❌");
     } finally {
       setLoading(false);
     }

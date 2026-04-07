@@ -27,6 +27,7 @@ import Trainers from './pages/Trainers'
 import MyBookings from './pages/auth/MyBookings'
 import BookTrainer from './pages/BookTrainer'
 import AdminBookings from './pages/admin/trainer/AdminBookings'
+import { Toaster } from 'react-hot-toast'
 
 
 
@@ -34,6 +35,16 @@ import AdminBookings from './pages/admin/trainer/AdminBookings'
 const App = () => {
   return (
     <Routes>
+
+      <Toaster 
+        position="top-right"
+        toastOptions={{
+          style: {
+            background: "#111",
+            color: "#fff",
+          },
+        }}
+      />
 
       {/* AUTH */}
       <Route path="/login" element={<Login />} />

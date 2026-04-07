@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axiosApi from "../api/axiosApi";
+import toast from "react-hot-toast";
 
 
 const BookTrainer = () => {
@@ -29,9 +30,9 @@ const BookTrainer = () => {
 
     try {
       await axiosApi.post("/booking", form);
-      alert("Booking Sent ✅");
+      toast.success("Booking Sent ✅");
     } catch {
-      alert("Error ❌");
+      toast.error("Error ❌");
     }
   };
 

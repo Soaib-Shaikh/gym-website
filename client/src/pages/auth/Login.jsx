@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import axiosApi from "../../api/axiosApi";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const Login = () => {
      console.log(import.meta.env.VITE_API_URL);
-     
+
 
     const navigate = useNavigate();
 
@@ -31,7 +32,7 @@ const Login = () => {
             // 👤 USER SAVE (optional but useful)
             localStorage.setItem("user", JSON.stringify(res.data.user));
 
-            alert("Login Success 🔥");
+            toast.success("Login Success 🔥");
 
             // 🔁 redirect (home ya dashboard)
       
@@ -42,7 +43,7 @@ const Login = () => {
                     }
                 } catch (err) {
                     console.log(err.response?.data || err.message);
-                    alert("Invalid Credentials ❌");
+                    toast.error("Invalid Credentials ❌");
                 }
             };
 

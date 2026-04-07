@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axiosApi from "../../api/axiosApi";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const Signup = () => {
 
@@ -31,7 +32,7 @@ const Signup = () => {
 
             localStorage.setItem("users", JSON.stringify(existingUsers));
 
-            alert("Signup Success 🔥");
+            toast.success("Signup Success 🔥");
             navigate("/login");
 
             // reset form
@@ -43,7 +44,7 @@ const Signup = () => {
 
         } catch (err) {
             console.log(err.response?.data || err.message);
-            alert("Signup Failed ❌");
+            toast.success("Signup Failed. ❌");
         }
     };
 

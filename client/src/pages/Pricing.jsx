@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axiosApi from "../api/axiosApi";
+import toast from "react-hot-toast";
 
 const plans = [
   {
@@ -100,7 +101,7 @@ const Pricing = () => {
 
     } catch (err) {
       console.log(err);
-      alert("Payment Failed ❌");
+      toast.error("Payment Failed ❌");
     }
   };
 
