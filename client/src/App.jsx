@@ -34,9 +34,8 @@ import { Toaster } from 'react-hot-toast'
 
 const App = () => {
   return (
-    <Routes>
-
-      <Toaster 
+  <>  
+    <Toaster 
         position="top-right"
         toastOptions={{
           style: {
@@ -45,6 +44,9 @@ const App = () => {
           },
         }}
       />
+    
+    <Routes>
+
 
       {/* AUTH */}
       <Route path="/login" element={<Login />} />
@@ -115,6 +117,7 @@ const App = () => {
       </Route>
 
     </Routes>
+  </>
   )
 }
 
