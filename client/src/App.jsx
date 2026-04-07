@@ -35,12 +35,29 @@ import { Toaster } from 'react-hot-toast'
 const App = () => {
   return (
   <>  
-    <Toaster 
-        position="top-right"
+     <Toaster
+        position="top-center"
         toastOptions={{
+          duration: 3000,
           style: {
-            background: "#111",
+            background: "rgba(20,20,20,0.9)",
             color: "#fff",
+            borderRadius: "12px",
+            padding: "14px 18px",
+            fontSize: "14px",
+            backdropFilter: "blur(10px)",
+            border: "1px solid rgba(255,255,255,0.1)",
+            boxShadow: "0 8px 30px rgba(0,0,0,0.5)",
+          },
+          success: {
+            style: {
+              borderLeft: "4px solid #22c55e",
+            },
+          },
+          error: {
+            style: {
+              borderLeft: "4px solid #ef4444",
+            },
           },
         }}
       />
