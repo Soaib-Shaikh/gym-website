@@ -16,16 +16,17 @@ const router = express.Router();
 router.post("/register", registerUser);
 router.post("/login", loginUser);
 
-// 🔥 PROFILE ROUTES
-router.get("/profile", protect, getProfile);  
+router.get("/profile", protect, getProfile);
 router.put("/profile", protect, upload.single("image"), updateProfile);
 
-// 🔹 Google login
-router.get("/google",
-  passport.authenticate("google", { scope: ["profile", "email"] })
-);
+// 🔥 Google login (FIXED)
+router.get("/google", (req, res, next) => {
+  passport.authenticate("google", {
+    scope: ["profile", "email"]
+  })(req, res, next);
+});
 
-// 🔹 Google callback
+// 🔥 Google callback
 router.get("/google/callback",
   passport.authenticate("google", { session: false }),
   (req, res) => {
