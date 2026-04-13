@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axiosApi from "../../api/axiosApi";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -22,20 +22,11 @@ const Signup = () => {
         e.preventDefault();
 
         try {
-
-            const res = await axiosApi.post("/auth/register", user);
-
-            const existingUsers =
-                JSON.parse(localStorage.getItem("users")) || [];
-
-            existingUsers.push(res.data.user || user);
-
-            localStorage.setItem("users", JSON.stringify(existingUsers));
+            await axiosApi.post("/auth/register", user);
 
             toast.success("Signup Success 🔥");
             navigate("/login");
 
-            // reset form
             setUser({
                 name: "",
                 email: "",
@@ -43,15 +34,35 @@ const Signup = () => {
             });
 
         } catch (err) {
-            console.log(err.response?.data || err.message);
-            toast.success("Signup Failed. ❌");
+            toast.error("Signup Failed ❌");
         }
     };
+
+    const handleGoogleLogin = () => {
+        window.open(
+            `${import.meta.env.VITE_API_URL}/auth/google`,
+            "Google Login",
+            "width=500,height=600"
+        );
+    };
+
+    useEffect(() => {
+        const handler = (event) => {
+            if (event.data.token) {
+                localStorage.setItem("token", event.data.token);
+                toast.success("Signup with Google Success 🔥");
+                navigate("/");
+            }
+        };
+
+        window.addEventListener("message", handler);
+
+        return () => window.removeEventListener("message", handler);
+    }, []);
 
     return (
         <div className="h-screen flex">
 
-            {/* RIGHT FORM */}
             <div className="w-full md:w-1/2 flex items-center justify-center bg-[#111] text-white px-8">
 
                 <div className="w-full max-w-md">
@@ -64,7 +75,7 @@ const Signup = () => {
                             placeholder="Full Name"
                             className="p-3 bg-transparent border border-gray-600 outline-none"
                             name="name"
-                            value={user.name || ''}
+                            value={user.name}
                             onChange={handleChange}
                         />
 
@@ -73,7 +84,7 @@ const Signup = () => {
                             placeholder="Email"
                             className="p-3 bg-transparent border border-gray-600 outline-none"
                             name="email"
-                            value={user.email || ''}
+                            value={user.email}
                             onChange={handleChange}
                         />
 
@@ -82,7 +93,7 @@ const Signup = () => {
                             placeholder="Password"
                             className="p-3 bg-transparent border border-gray-600 outline-none"
                             name="password"
-                            value={user.password || ''}
+                            value={user.password}
                             onChange={handleChange}
                         />
 
@@ -91,6 +102,15 @@ const Signup = () => {
                         </button>
 
                     </form>
+
+                    <p className="text-center my-4 text-gray-400">or</p>
+
+                    <button
+                        onClick={handleGoogleLogin}
+                        className="w-full bg-white text-black py-3 font-semibold border border-gray-300 hover:bg-gray-200"
+                    >
+                        Continue with Google
+                    </button>
 
                     <p className="mt-4 text-sm text-gray-400">
                         Already have an account?{" "}
@@ -102,7 +122,6 @@ const Signup = () => {
 
             </div>
 
-            {/* LEFT IMAGE */}
             <div
                 className="hidden md:block w-1/2 bg-cover bg-center"
                 style={{

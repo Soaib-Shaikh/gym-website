@@ -10,6 +10,9 @@ import uploadRoutes from "./routes/uploadRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import trainerRoutes from "./routes/trainerRoutes.js";
 import bookingRoutes from "./routes/bookingRoutes.js";
+import session from "express-session";
+import passport from "passport";
+import "./configs/passport.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -20,6 +23,14 @@ app.use(cors({
 }));
 app.use(express.json());
 
+app.use(session({
+  secret: "secretkey",
+  resave: false,
+  saveUninitialized: true
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use("/api/auth", authRoutes)
 app.use("/api/contact", contactRoutes)

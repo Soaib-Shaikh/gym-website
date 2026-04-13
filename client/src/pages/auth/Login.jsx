@@ -1,12 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axiosApi from "../../api/axiosApi";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import loginImg from "../../assets/images/login.png"
+import loginImg from "../../assets/images/login.png";
 
 const Login = () => {
-    console.log(import.meta.env.VITE_API_URL);
-
 
     const navigate = useNavigate();
 
@@ -24,18 +22,12 @@ const Login = () => {
         e.preventDefault();
 
         try {
-            // 🔥 API CALL
             const res = await axiosApi.post("/auth/login", user);
 
-            // 🔐 TOKEN SAVE
             localStorage.setItem("token", res.data.token);
-
-            // 👤 USER SAVE (optional but useful)
             localStorage.setItem("user", JSON.stringify(res.data.user));
 
             toast.success("Login Success 🔥");
-
-            // 🔁 redirect (home ya dashboard)
 
             if (res.data.user.role === "admin") {
                 navigate("/admin");
@@ -43,23 +35,46 @@ const Login = () => {
                 navigate("/");
             }
         } catch (err) {
-            console.log(err.response?.data || err.message);
             toast.error("Invalid Credentials ❌");
         }
     };
 
+    const handleGoogleLogin = () => {
+        const width = 500;
+        const height = 600;
+
+        const left = window.screenX + (window.innerWidth - width) / 2;
+        const top = window.screenY + (window.innerHeight - height) / 2;
+
+        window.open(
+            `${import.meta.env.VITE_API_URL}/auth/google`,
+            "Google Login",
+            `width=${width},height=${height},top=${top},left=${left}`
+        );
+    };
+
+    useEffect(() => {
+        const handler = (event) => {
+            if (event.data.token) {
+                localStorage.setItem("token", event.data.token);
+                toast.success("Google Login Success 🔥");
+                navigate("/");
+            }
+        };
+
+        window.addEventListener("message", handler);
+
+        return () => window.removeEventListener("message", handler);
+    }, []);
+
     return (
         <div className="h-screen flex">
 
-            {/* LEFT IMAGE */}
             <div
                 className="hidden md:block w-1/2 bg-cover bg-center"
-                style={{
-                    backgroundImage: `url(${loginImg})`
-                }}
+                style={{ backgroundImage: `url(${loginImg})` }}
             ></div>
 
-            {/* RIGHT FORM */}
             <div className="w-full md:w-1/2 flex items-center justify-center bg-[#111] text-white px-8">
 
                 <div className="w-full max-w-md">
@@ -72,7 +87,7 @@ const Login = () => {
                             placeholder="Email"
                             className="p-3 bg-transparent border border-gray-600 outline-none"
                             name="email"
-                            value={user.email || ''}
+                            value={user.email}
                             onChange={handleChange}
                         />
 
@@ -81,7 +96,7 @@ const Login = () => {
                             placeholder="Password"
                             className="p-3 bg-transparent border border-gray-600 outline-none"
                             name="password"
-                            value={user.password || ''}
+                            value={user.password}
                             onChange={handleChange}
                         />
 
@@ -90,6 +105,15 @@ const Login = () => {
                         </button>
 
                     </form>
+
+                    <p className="text-center my-4 text-gray-400">or</p>
+
+                    <button
+                        onClick={handleGoogleLogin}
+                        className="w-full bg-white text-black py-3 font-semibold border border-gray-300 hover:bg-gray-200"
+                    >
+                        Continue with Google
+                    </button>
 
                     <p className="mt-4 text-sm text-gray-400">
                         Don't have an account?{" "}
