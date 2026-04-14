@@ -31,22 +31,28 @@ router.get("/google", (req, res, next) => {
 router.get("/google/callback",
   passport.authenticate("google", { session: false }),
   (req, res) => {
+    try {
 
-    const user = req.user;
+      if (!req.user) {
+        return res.status(400).send("User not found");
+      }
 
-    const token = jwt.sign(
-      { id: user._id },
-      process.env.JWT_SECRET,
-      { expiresIn: "7d" }
-    );
+      const token = jwt.sign(
+        { id: req.user._id },
+        process.env.JWT_SECRET,
+        { expiresIn: "7d" }
+      );
 
-    res.send(`
-      <script>
-        window.opener.postMessage({ token: "${token}" }, "*");
-        window.close();
-      </script>
-    `);
+      res.send(`
+        <script>
+          window.opener.postMessage({ token: "${token}" }, "*");
+          window.close();
+        </script>
+      `);
+
+    } catch (err) {
+      console.log("CALLBACK ERROR:", err);
+      res.status(500).send("Internal Server Error");
+    }
   }
 );
-
-export default router;

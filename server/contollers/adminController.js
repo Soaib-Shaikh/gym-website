@@ -7,7 +7,7 @@ export const getUsers = async (req, res) => {
   res.json(users);
 };
 
-// 🔥 DELETE USER
+
 export const deleteUser = async (req, res) => {
   await User.findByIdAndDelete(req.params.id);
   res.json({ message: "User deleted" });
