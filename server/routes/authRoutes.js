@@ -34,8 +34,8 @@ router.get("/google/callback", (req, res, next) => {
   passport.authenticate("google", { session: false }, (err, user, info) => {
 
     if (err) {
-      console.log("AUTH ERROR:", err);
-      return res.status(500).send("Google Auth Error");
+      console.log("AUTH ERROR FULL:", err); // 🔥 FULL ERROR
+  return res.status(500).send("Google Auth Error: " + err.message);
     }
 
     if (!user) {
