@@ -116,78 +116,36 @@ export const sendOtp = async (req, res) => {
   try {
     const email = req.body.email.toLowerCase().trim();
 
-    console.log("EMAIL:", email);
-
     const user = await User.findOne({
       email: { $regex: new RegExp(`^${email}$`, "i") }
     });
 
-    console.log("USER:", user);
-
     if (!user) return res.status(404).json({ msg: "User not found" });
 
-    const otp = Math.floor(100000 + Math.random() * 900000).toString();
-
-    user.resetOtp = otp;
-    user.resetOtpExpire = Date.now() + 5 * 60 * 1000;
-
-    await user.save();
-
-    await sendEmail(email, otp);
-
-    res.json({ msg: "OTP sent 🔥" });
-
-  } catch (err) {
-    console.log("OTP ERROR:", err);
-    res.status(500).json({ msg: err.message });
-  }
-};
-
-export const verifyOtp = async (req, res) => {
-  try {
-    const { email, otp } = req.body;
-
-    const user = await User.findOne({ email });
-
-    if (
-      !user ||
-      user.resetOtp !== otp ||
-      user.resetOtpExpire < Date.now()
-    ) {
-      return res.status(400).json({ msg: "Invalid or expired OTP" });
-    }
-
-    res.json({ msg: "OTP verified" });
+    // 🔥 NO EMAIL, NO OTP
+    res.json({ msg: "Proceed to reset password" });
 
   } catch (err) {
     res.status(500).json({ msg: err.message });
   }
 };
+
 
 export const resetPassword = async (req, res) => {
   try {
-    const { email, otp, newPassword } = req.body;
+    const { email, newPassword } = req.body;
 
     const user = await User.findOne({ email });
 
     if (!user) return res.status(404).json({ msg: "User not found" });
-
-    if (
-      user.resetOtp !== otp ||
-      user.resetOtpExpire < Date.now()
-    ) {
-      return res.status(400).json({ msg: "Invalid or expired OTP" });
-    }
 
     const hashedPassword = await bcrypt.hash(newPassword, 10);
 
     user.password = hashedPassword;
-    user.resetOtp = null;
-    user.resetOtpExpire = null;
 
     await user.save();
 
-    res.json({ msg: "Password updated" });
+    res.json({ msg: "Password updated successfully 🔥" });
 
   } catch (err) {
     res.status(500).json({ msg: err.message });

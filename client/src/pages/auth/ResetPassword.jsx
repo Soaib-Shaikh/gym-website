@@ -10,14 +10,12 @@ const ResetPassword = () => {
 
   const email = location.state?.email;
 
-  const [otp, setOtp] = useState("");
   const [password, setPassword] = useState("");
 
   const handleReset = async () => {
     try {
       await axiosApi.post("/auth/reset-password", {
         email,
-        otp,
         newPassword: password
       });
 
@@ -25,7 +23,7 @@ const ResetPassword = () => {
       navigate("/login");
 
     } catch (err) {
-      toast.error("Invalid OTP ❌");
+      toast.error(err.response?.data?.msg || "Error ❌");
     }
   };
 
@@ -35,14 +33,6 @@ const ResetPassword = () => {
       <div className="bg-black/40 p-8 rounded-xl w-full max-w-md">
 
         <h2 className="text-2xl font-bold mb-6">Reset Password 🔐</h2>
-
-        <input
-          type="text"
-          placeholder="Enter OTP"
-          className="w-full p-3 mb-4 bg-transparent border border-gray-600"
-          value={otp}
-          onChange={(e) => setOtp(e.target.value)}
-        />
 
         <input
           type="password"

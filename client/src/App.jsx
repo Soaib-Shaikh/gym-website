@@ -73,7 +73,6 @@ const App = () => {
         <Route path="/register" element={<Signup />} />
 
         <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/verify-otp" element={<VerifyOtp />} />
         <Route path="/reset-password" element={<ResetPassword />} />
 
         {/* MAIN */}

@@ -9,18 +9,18 @@ const ForgotPassword = () => {
     const navigate = useNavigate();
 
     const handleSendOtp = async () => {
-        try {
-            await axiosApi.post("/auth/send-otp", { email });
-            toast.success("OTP Sent 🔥");
-            navigate("/verify-otp", { state: { email } });
-        } catch (err) {
-            console.log("ERROR:", err.response?.data);
+  try {
+    await axiosApi.post("/auth/send-otp", { email });
 
-            toast.error(
-                err.response?.data?.msg || "Something went wrong ❌"
-            );
-        }
-    };
+    toast.success("Continue to reset password 🔥");
+
+    // 🔥 direct reset page
+    navigate("/reset-password", { state: { email } });
+
+  } catch (err) {
+    toast.error(err.response?.data?.msg || "Error ❌");
+  }
+};
 
     return (
         <div className="h-screen flex items-center justify-center bg-[#111] text-white">
