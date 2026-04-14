@@ -52,7 +52,10 @@ router.get("/google/callback", (req, res, next) => {
 
       res.send(`
         <script>
-          window.opener.postMessage({ token: "${token}" }, "*");
+          window.opener.postMessage(
+          { token: "${token}" },
+            user: ${JSON.stringify(user)},
+           "*");
           window.close();
         </script>
       `);
