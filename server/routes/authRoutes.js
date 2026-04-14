@@ -19,7 +19,7 @@ router.post("/login", loginUser);
 router.get("/profile", protect, getProfile);
 router.put("/profile", protect, upload.single("image"), updateProfile);
 
-// 🔥 Google login (FIXED)
+// 🔥 Google login
 router.get("/google", (req, res, next) => {
   passport.authenticate("google", {
     scope: ["profile", "email"],
@@ -27,32 +27,42 @@ router.get("/google", (req, res, next) => {
   })(req, res, next);
 });
 
-// 🔥 Google callback
-router.get("/google/callback",
-  passport.authenticate("google", { session: false }),
-  (req, res) => {
+// 🔥 Google callback (FINAL FIX)
+router.get("/google/callback", (req, res, next) => {
+
+  passport.authenticate("google", { session: false }, (err, user, info) => {
+
+    if (err) {
+      console.log("AUTH ERROR:", err);
+      return res.status(500).send("Google Auth Error");
+    }
+
+    if (!user) {
+      console.log("NO USER:", info);
+      return res.status(400).send("User not found");
+    }
+
     try {
-
-      console.log("USER:", req.user);
-      console.log("JWT_SECRET:", process.env.JWT_SECRET);
-
-      if (!req.user) {
-        return res.status(400).send("User not found");
-      }
-
       const token = jwt.sign(
-        { id: req.user._id },
+        { id: user._id },
         process.env.JWT_SECRET,
         { expiresIn: "7d" }
       );
 
-      res.send("LOGIN SUCCESS"); // 🔥 simple response for test
+      res.send(`
+        <script>
+          window.opener.postMessage({ token: "${token}" }, "*");
+          window.close();
+        </script>
+      `);
 
-    } catch (err) {
-      console.log("CALLBACK ERROR:", err);
-      res.status(500).send("ERROR: " + err.message);
+    } catch (error) {
+      console.log("JWT ERROR:", error);
+      res.status(500).send("Token Error");
     }
-  }
-);
+
+  })(req, res, next);
+
+});
 
 export default router;
