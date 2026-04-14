@@ -12,7 +12,7 @@ const ForgotPassword = () => {
         try {
             await axiosApi.post("/auth/send-otp", { email });
             toast.success("OTP Sent 🔥");
-            navigate("/reset-password", { state: { email } });
+            navigate("/verify-otp", { state: { email } });
         } catch (err) {
             console.log("ERROR:", err.response?.data);
 

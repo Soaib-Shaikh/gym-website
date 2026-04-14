@@ -7,7 +7,8 @@ import {
   updateProfile,
   getProfile,
   sendOtp,
-  resetPassword
+  resetPassword,
+  verifyOtp
 } from "../contollers/userController.js";
 
 import { protect } from "../middlewares/authMiddleware.js";
@@ -75,6 +76,7 @@ router.get("/google/callback", (req, res, next) => {
 });
 
 router.post("/send-otp", sendOtp);
+router.post("/verify-otp", verifyOtp);
 router.post("/reset-password", resetPassword);
 
 export default router;

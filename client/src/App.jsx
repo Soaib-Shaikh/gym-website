@@ -30,6 +30,7 @@ import AdminBookings from './pages/admin/trainer/AdminBookings'
 import { Toaster } from 'react-hot-toast'
 import ForgotPassword from './pages/auth/ForgotPasword'
 import ResetPassword from './pages/auth/ResetPassword'
+import VerifyOtp from './pages/auth/VerifyOtp'
 
 
 
@@ -72,6 +73,7 @@ const App = () => {
         <Route path="/register" element={<Signup />} />
 
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/verify-otp" element={<VerifyOtp />} />
         <Route path="/reset-password" element={<ResetPassword />} />
 
         {/* MAIN */}
