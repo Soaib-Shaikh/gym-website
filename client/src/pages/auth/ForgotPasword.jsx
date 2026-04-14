@@ -5,45 +5,49 @@ import axiosApi from "../../api/axiosApi.js";
 
 const ForgotPassword = () => {
 
-  const [email, setEmail] = useState("");
-  const navigate = useNavigate();
+    const [email, setEmail] = useState("");
+    const navigate = useNavigate();
 
-  const handleSendOtp = async () => {
-    try {
-      await axiosApi.post("/auth/send-otp", { email });
-      toast.success("OTP Sent 🔥");
-      navigate("/reset-password", { state: { email } });
-    } catch (err) {
-      toast.error("User not found ❌");
-    }
-  };
+    const handleSendOtp = async () => {
+        try {
+            await axiosApi.post("/auth/send-otp", { email });
+            toast.success("OTP Sent 🔥");
+            navigate("/reset-password", { state: { email } });
+        } catch (err) {
+            console.log("ERROR:", err.response?.data);
 
-  return (
-    <div className="h-screen flex items-center justify-center bg-[#111] text-white">
+            toast.error(
+                err.response?.data?.msg || "Something went wrong ❌"
+            );
+        }
+    };
 
-      <div className="bg-black/40 p-8 rounded-xl w-full max-w-md">
+    return (
+        <div className="h-screen flex items-center justify-center bg-[#111] text-white">
 
-        <h2 className="text-2xl font-bold mb-6">Forgot Password 🔑</h2>
+            <div className="bg-black/40 p-8 rounded-xl w-full max-w-md">
 
-        <input
-          type="email"
-          placeholder="Enter your email"
-          className="w-full p-3 mb-4 bg-transparent border border-gray-600"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+                <h2 className="text-2xl font-bold mb-6">Forgot Password 🔑</h2>
 
-        <button
-          onClick={handleSendOtp}
-          className="w-full bg-red-500 py-3 hover:bg-red-600"
-        >
-          Send OTP
-        </button>
+                <input
+                    type="email"
+                    placeholder="Enter your email"
+                    className="w-full p-3 mb-4 bg-transparent border border-gray-600"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                />
 
-      </div>
+                <button
+                    onClick={handleSendOtp}
+                    className="w-full bg-red-500 py-3 hover:bg-red-600"
+                >
+                    Send OTP
+                </button>
 
-    </div>
-  );
+            </div>
+
+        </div>
+    );
 };
 
 export default ForgotPassword;
