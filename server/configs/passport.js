@@ -7,6 +7,7 @@ passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
   callbackURL:"https://gym-website-1-st5g.onrender.com/api/auth/google/callback",
+   scope: ["profile", "email"]
 },
 async (accessToken, refreshToken, profile, done) => {
   try {

@@ -22,7 +22,8 @@ router.put("/profile", protect, upload.single("image"), updateProfile);
 // 🔥 Google login (FIXED)
 router.get("/google", (req, res, next) => {
   passport.authenticate("google", {
-    scope: ["profile", "email"]
+    scope: ["profile", "email"],
+    prompt: "select_account"
   })(req, res, next);
 });
 

@@ -18,10 +18,6 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// 🔥 DEBUG ENV (VERY IMPORTANT)
-console.log("GOOGLE_CLIENT_ID:", process.env.GOOGLE_CLIENT_ID);
-console.log("GOOGLE_CLIENT_SECRET:", process.env.GOOGLE_CLIENT_SECRET ? "FOUND" : "NOT FOUND");
-console.log("JWT_SECRET:", process.env.JWT_SECRET);
 
 app.use(cors({
   origin: true,
