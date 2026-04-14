@@ -33,6 +33,9 @@ router.get("/google/callback",
   (req, res) => {
     try {
 
+      console.log("USER:", req.user);
+      console.log("JWT_SECRET:", process.env.JWT_SECRET);
+
       if (!req.user) {
         return res.status(400).send("User not found");
       }
@@ -43,16 +46,11 @@ router.get("/google/callback",
         { expiresIn: "7d" }
       );
 
-      res.send(`
-        <script>
-          window.opener.postMessage({ token: "${token}" }, "*");
-          window.close();
-        </script>
-      `);
+      res.send("LOGIN SUCCESS"); // 🔥 simple response for test
 
     } catch (err) {
       console.log("CALLBACK ERROR:", err);
-      res.status(500).send("Internal Server Error");
+      res.status(500).send("ERROR: " + err.message);
     }
   }
 );
