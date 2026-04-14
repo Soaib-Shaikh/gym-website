@@ -8,7 +8,6 @@ import {
   getProfile,
   sendOtp,
   resetPassword,
-  verifyOtp
 } from "../contollers/userController.js";
 
 import { protect } from "../middlewares/authMiddleware.js";
