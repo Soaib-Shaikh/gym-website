@@ -35,7 +35,7 @@ router.get("/google/callback", (req, res, next) => {
 
     if (err) {
       console.log("AUTH ERROR FULL:", err); // 🔥 FULL ERROR
-  return res.status(500).send("Google Auth Error: " + err.message);
+      return res.status(500).send("Google Auth Error: " + err.message);
     }
 
     if (!user) {
@@ -51,14 +51,17 @@ router.get("/google/callback", (req, res, next) => {
       );
 
       res.send(`
-        <script>
-          window.opener.postMessage(
-          { token: "${token}" },
-            user: ${JSON.stringify(user)},
-           "*");
-          window.close();
-        </script>
-      `);
+  <script>
+    window.opener.postMessage({
+      token: "${token}",
+      user: {
+        name: "${user.name}",
+        email: "${user.email}"
+      }
+    }, "*");
+    window.close();
+  </script>
+`);
 
     } catch (error) {
       console.log("JWT ERROR:", error);

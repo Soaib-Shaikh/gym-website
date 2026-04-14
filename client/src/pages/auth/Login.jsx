@@ -57,6 +57,8 @@ const Login = () => {
         const handler = (event) => {
             if (event.data.token) {
                 localStorage.setItem("token", event.data.token);
+                localStorage.setItem("user", JSON.stringify(event.data.user));
+
                 toast.success("Google Login Success 🔥");
                 navigate("/");
             }
