@@ -114,22 +114,28 @@ export const updateProfile = async (req, res) => {
 
 export const sendOtp = async (req, res) => {
   try {
-    const { email } = req.body;
+    const email = req.body.email.toLowerCase().trim();
 
-    const user = await User.findOne({ email });
+    console.log("EMAIL:", email);
+
+    const user = await User.findOne({
+      email: { $regex: new RegExp(`^${email}$`, "i") }
+    });
+
+    console.log("USER:", user);
+
     if (!user) return res.status(404).json({ msg: "User not found" });
 
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
 
     user.resetOtp = otp;
-    user.resetOtpExpire = Date.now() + 5 * 60 * 1000; // 5 min
+    user.resetOtpExpire = Date.now() + 5 * 60 * 1000;
 
     await user.save();
 
-    // 🔥 EMAIL SEND
     await sendEmail(email, otp);
 
-    res.json({ msg: "OTP sent to email 🔥" });
+    res.json({ msg: "OTP sent 🔥" });
 
   } catch (err) {
     console.log("OTP ERROR:", err);
