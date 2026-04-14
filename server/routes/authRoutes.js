@@ -20,12 +20,13 @@ router.get("/profile", protect, getProfile);
 router.put("/profile", protect, upload.single("image"), updateProfile);
 
 // 🔥 Google login
-router.get("/google", (req, res, next) => {
+router.get("/google",
   passport.authenticate("google", {
     scope: ["profile", "email"],
-    prompt: "select_account"
-  })(req, res, next);
-});
+    accessType: "offline",
+    prompt: "consent"
+  })
+);
 
 // 🔥 Google callback (FINAL FIX)
 router.get("/google/callback", (req, res, next) => {
