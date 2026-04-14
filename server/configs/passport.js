@@ -6,7 +6,7 @@ import User from "../models/userModel.js";
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: "/api/auth/google/callback"
+  callbackURL:"https://gym-website-1-st5g.onrender.com/api/auth/google/callback",
 },
 async (accessToken, refreshToken, profile, done) => {
   try {
