@@ -28,14 +28,16 @@ import MyBookings from './pages/auth/MyBookings'
 import BookTrainer from './pages/BookTrainer'
 import AdminBookings from './pages/admin/trainer/AdminBookings'
 import { Toaster } from 'react-hot-toast'
+import ForgotPassword from './pages/auth/ForgotPasword'
+import ResetPassword from './pages/auth/ResetPassword'
 
 
 
 
 const App = () => {
   return (
-  <>  
-     <Toaster
+    <>
+      <Toaster
         position="top-center"
         toastOptions={{
           duration: 3000,
@@ -61,80 +63,83 @@ const App = () => {
           },
         }}
       />
-    
-    <Routes>
+
+      <Routes>
 
 
-      {/* AUTH */}
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Signup />} />
+        {/* AUTH */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Signup />} />
 
-      {/* MAIN */}
-      <Route path='/' element={<MainLayout />}>
-        <Route index element={<Home />} />
-        <Route path='about' element={<About />} />
-        <Route path='services' element={<Services />} />
-        <Route path='trainers' element={<Trainers />} />
-        <Route path='pricing' element={<Pricing />} />
-        <Route path='contact' element={<Contact />} />
-        <Route path="success" element={<Success />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
 
+        {/* MAIN */}
+        <Route path='/' element={<MainLayout />}>
+          <Route index element={<Home />} />
+          <Route path='about' element={<About />} />
+          <Route path='services' element={<Services />} />
+          <Route path='trainers' element={<Trainers />} />
+          <Route path='pricing' element={<Pricing />} />
+          <Route path='contact' element={<Contact />} />
+          <Route path="success" element={<Success />} />
+
+          <Route
+            path="profile"
+            element={<ProtectedRoute><Profile /></ProtectedRoute>}
+          />
+
+          <Route
+            path="edit-profile"
+            element={<ProtectedRoute><EditProfile /></ProtectedRoute>}
+          />
+
+          <Route
+            path="book-trainer"
+            element={
+              <ProtectedRoute>
+                <BookTrainer />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="my-bookings"
+            element={
+              <ProtectedRoute>
+                <MyBookings />
+              </ProtectedRoute>
+            }
+          />
+
+        </Route>
+
+
+
+        {/* 👑 ADMIN */}
         <Route
-          path="profile"
-          element={<ProtectedRoute><Profile /></ProtectedRoute>}
-        />
-
-        <Route
-          path="edit-profile"
-          element={<ProtectedRoute><EditProfile /></ProtectedRoute>}
-        />
-
-        <Route
-          path="book-trainer"
+          path="/admin"
           element={
-            <ProtectedRoute>
-              <BookTrainer />
-            </ProtectedRoute>
+            <AdminRoute>
+              <AdminLayout />
+            </AdminRoute>
           }
-        />
+        >
 
-        <Route
-          path="my-bookings"
-          element={
-            <ProtectedRoute>
-              <MyBookings />
-            </ProtectedRoute>
-          }
-        />
+          <Route index element={<Dashboard />} />
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="users" element={<Users />} />
+          <Route path="trainers/add" element={<AddTrainer />} />
+          <Route path="trainers/view" element={<ViewTrainer />} />
+          <Route path="payments/pending" element={<PendingPayments />} />
+          <Route path="payments/completed" element={<CompletedPayments />} />
+          <Route path="contacts" element={<Contacts />} />
+          <Route path="bookings" element={<AdminBookings />} />
 
-      </Route>
+        </Route>
 
-
-
-      {/* 👑 ADMIN */}
-      <Route
-        path="/admin"
-        element={
-          <AdminRoute>
-            <AdminLayout />
-          </AdminRoute>
-        }
-      >
-
-        <Route index element={<Dashboard />} />
-        <Route path="dashboard" element={<Dashboard />} />
-        <Route path="users" element={<Users />} />
-        <Route path="trainers/add" element={<AddTrainer />} />
-        <Route path="trainers/view" element={<ViewTrainer />} />
-        <Route path="payments/pending" element={<PendingPayments />} />
-        <Route path="payments/completed" element={<CompletedPayments />} />
-        <Route path="contacts" element={<Contacts />} />
-        <Route path="bookings" element={<AdminBookings />} />
-
-      </Route>
-
-    </Routes>
-  </>
+      </Routes>
+    </>
   )
 }
 

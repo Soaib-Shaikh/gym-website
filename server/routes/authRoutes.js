@@ -5,7 +5,9 @@ import {
   loginUser,
   registerUser,
   updateProfile,
-  getProfile
+  getProfile,
+  sendOtp,
+  resetPassword
 } from "../contollers/userController.js";
 
 import { protect } from "../middlewares/authMiddleware.js";
@@ -71,5 +73,8 @@ router.get("/google/callback", (req, res, next) => {
   })(req, res, next);
 
 });
+
+router.post("/send-otp", sendOtp);
+router.post("/reset-password", resetPassword);
 
 export default router;

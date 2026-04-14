@@ -31,7 +31,15 @@ const userSchema = new mongoose.Schema({
     height: Number,
     weight: Number,
     goal: String,
-    targetWeight: Number
+    targetWeight: Number,
+    resetOtp: {
+        type: String
+    },
+
+    resetOtpExpire: {
+        type: Date
+    }
+
 
 }, {
     timestamps: true

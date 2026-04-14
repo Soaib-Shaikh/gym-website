@@ -105,6 +105,14 @@ const Login = () => {
                         <button className="bg-red-500 py-3 font-semibold hover:bg-red-600">
                             Login
                         </button>
+                        <p className="text-right text-sm text-gray-400">
+                            <span
+                                onClick={() => navigate("/forgot-password")}
+                                className="cursor-pointer text-red-500 hover:underline"
+                            >
+                                Forgot Password?
+                            </span>
+                        </p>
 
                     </form>
 
